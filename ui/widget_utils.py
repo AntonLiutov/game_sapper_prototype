@@ -1,4 +1,5 @@
 import numpy as np
+import time
 from IPython.display import display
 from application.simulate_data import Game
 from application.settings import Settings
@@ -7,12 +8,12 @@ from ui.widgets import Widgets
 
 class Utils:
     n_open_cells = 0
+    game = None
+    grid = None
 
-    def __init__(self, game: Game, app_widgets: Widgets, settings: Settings):
-        self.game = game
+    def __init__(self, app_widgets: Widgets, settings: Settings):
         self.app_widgets = app_widgets
         self.settings = settings
-        self.grid = self.app_widgets.create_grid(self.game.grid_buttons, self.game.matrix_size)
         self.observe_widgets()
         self.observe_clicks()
 
@@ -21,13 +22,19 @@ class Utils:
 
     def on_button_clicked(self, button):
         self.app_widgets.start_button.style.button_color = self.settings.handle_color.get("START_BUTTON")
-        self.app_widgets.start_button.description = self.settings.start_button.get("DESCRIPTION_RESTART")
+        self.app_widgets.start_button.description = self.settings.start_button.get("DESCRIPTION_STARTING")
         self.app_widgets.restarted.description = self.settings.validation.get("DESCRIPTION_LOAD")
         self.app_widgets.output.clear_output(wait=True)
 
-        display(self.app_widgets.grid)
+        self.game = Game(app_widgets=self.app_widgets, settings=self.settings)
+        self.app_widgets.create_grid(self.game.grid_buttons, self.game.matrix_size)
+        with self.app_widgets.output:
+            display(self.app_widgets.grid)
+        self.app_widgets.calculate_n_of_cells_to_open()
+        self.app_widgets.progress_bar.max = self.app_widgets.n_of_cells_to_open
         self.game.rows.loc[self.game.base_mask].button.apply(lambda x: x.on_click(self.on_click_cell))
 
+        self.app_widgets.start_button.description = self.settings.start_button.get("DESCRIPTION_RESTART")
         self.app_widgets.restarted.description = self.settings.validation.get("DESCRIPTION_START")
         self.app_widgets.progress_bar.value = self.settings.progress_bar.get("VALUE")
         self.app_widgets.progress_bar.description_tooltip = self.settings.progress_bar.get("DESCRIPTION_TOOLTIP")
@@ -41,6 +48,7 @@ class Utils:
 
         if black_hole:
             self.update_buttons(mask=self.game.base_mask, func_update=self.open_black_holes)
+            self.app_widgets.update_start_button(button_color="LOST", description="DESCRIPTION_LOST")
         else:
             if adjacent_bh != 0:
                 self.update_progress(mask=self.game.base_mask & (self.game.rows.primary_key == number))
@@ -53,9 +61,9 @@ class Utils:
                                     func_update=self.open_cells)
 
             if self.game.n_open_cells == self.app_widgets.n_of_cells_to_open:
-                self.app_widgets.start_button.style.button_color = self.settings.handle_color.get("WON")
-                self.app_widgets.start_button.description = self.settings.start_button.get("DESCRIPTION_WON")
-                self.update_buttons(mask=self.game.base_mask, func_update=self.disable)
+                self.app_widgets.update_start_button(button_color="WON", description="DESCRIPTION_WON")
+                self.update_buttons(mask=self.game.base_mask & (self.game.rows.cell_open == 0),
+                                    func_update=self.disable)
 
     def update_progress(self, mask):
         self.game.rows.loc[mask, "cell_open"] = 1
@@ -93,19 +101,15 @@ class Utils:
     def open_black_holes(self, button):
         black_hole = button.black_hole
         if black_hole:
-            button.description = self.settings.cell.get("BLACK_NAME")
             button.style.button_color = self.settings.handle_color.get("LOST")
-        button.disabled = True
-        self.app_widgets.start_button.style.button_color = self.settings.handle_color.get("LOST")
-        self.app_widgets.start_button.description = self.settings.start_button.get("DESCRIPTION_LOST")
+        else:
+            button.disabled = True
 
         return button
 
     @staticmethod
     def disable(button):
-
         button.disabled = True
-
         return button
 
     def open_cells(self, button):

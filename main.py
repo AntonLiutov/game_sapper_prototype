@@ -10,5 +10,4 @@ if __name__ == '__main__':
 
     settings = Settings(configs=configs)
     app_widgets = Widgets(settings=settings)
-    game = Game(app_widgets=app_widgets, settings=settings)
-    utils = Utils(game=game, app_widgets=app_widgets, settings=settings)
+    utils = Utils(app_widgets=app_widgets, settings=settings)

@@ -87,18 +87,27 @@ class Widgets:
         self.output = widgets.Output()
 
     def link_widgets(self):
-        ui_main_menu = widgets.HBox(children=[self.difficulty, self.matrix_size, self.n_black_holes,
-                                              self.restarted, self.progress_bar],
-                                    layout={"align_items": self.settings.alignment,
+        ui_main_menu = widgets.HBox(children=[self.difficulty, self.matrix_size, self.n_black_holes],
+                                    layout={"align_items": self.settings.alignment.get("STRETCH"),
                                             "width": self.settings.width,
-                                            "justify_content": self.settings.alignment})
+                                            "justify_content": self.settings.alignment.get("CENTER")})
 
-        self.ui_app = widgets.VBox(children=[ui_main_menu, self.start_button, self.output],
+        ui_info = widgets.HBox(children=[self.restarted, self.progress_bar],
+                               layout={"align_items": self.settings.alignment.get("STRETCH"),
+                                       "width": self.settings.width,
+                                       "justify_content": self.settings.alignment.get("CENTER")})
+
+        self.ui_app = widgets.VBox(children=[ui_main_menu, ui_info, self.start_button, self.output],
                                    layout={
-                                       "align_items": self.settings.alignment,
+                                       "align_items": self.settings.alignment.get("STRETCH"),
                                        "width": self.settings.width,
                                        "padding": self.settings.layout_margin,
                                        "border": self.settings.borders.get("APP")})
 
     def calculate_n_of_cells_to_open(self):
         self.n_of_cells_to_open = self.matrix_size.value ** 2 - self.n_black_holes.value
+
+    def update_start_button(self, button_color, description):
+        self.start_button.style.button_color = self.settings.handle_color.get(button_color)
+        self.start_button.description = self.settings.start_button.get(description)
+

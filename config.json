@@ -1,5 +1,8 @@
 {
-  "ALIGNMENT": "center",
+  "ALIGNMENT": {
+    "CENTER": "center",
+    "STRETCH": "stretch"
+  },
   "LAYOUT_MARGIN": "10px",
   "CONTINUOUS_UPDATE": false,
   "DESCRIPTION_WIDTH": "initial",
@@ -83,6 +86,7 @@
   },
   "START_BUTTON": {
     "DESCRIPTION": "Start Game",
+    "DESCRIPTION_STARTING": "Starting...",
     "DESCRIPTION_RESTART": "Restart Game",
     "DESCRIPTION_LOST": "You Lost. Try Again",
     "DESCRIPTION_WON": "You Won. Play Again"
