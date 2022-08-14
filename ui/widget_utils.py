@@ -25,7 +25,6 @@ class Utils:
         self.app_widgets.restarted.description = self.settings.validation.get("DESCRIPTION_LOAD")
         self.app_widgets.output.clear_output(wait=True)
 
-        display(self.app_widgets.ui_app)
         display(self.app_widgets.grid)
         self.game.rows.loc[self.game.base_mask].button.apply(lambda x: x.on_click(self.on_click_cell))
 
