@@ -1,7 +1,6 @@
-pandas
-numpy
-seaborn
-matplotlib
+pandas>=1.4.3
+numpy>=1.23.2
+seaborn>=0.11.2
+matplotlib>=3.5.3
 ipywidgets==7.7.1
-IPython
-traitlets
+IPython>=8.4.0

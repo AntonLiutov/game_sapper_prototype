@@ -1,5 +1,5 @@
-import numpy as np
 from IPython.display import display
+import numpy as np
 from application.simulate_data import Game
 from application.settings import Settings
 from ui.widgets import Widgets

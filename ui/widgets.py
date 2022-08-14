@@ -140,5 +140,3 @@ class Widgets:
             self.progress_bar.value = self.settings.progress_bar.get(progress_value)
         if progress_tooltip is not None:
             self.progress_bar.description_tooltip = self.settings.progress_bar.get(progress_tooltip)
-
-
