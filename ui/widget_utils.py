@@ -1,5 +1,4 @@
 import numpy as np
-import time
 from IPython.display import display
 from application.simulate_data import Game
 from application.settings import Settings

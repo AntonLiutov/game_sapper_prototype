@@ -1,6 +1,6 @@
 import json
+from IPython.display import display
 from application.settings import Settings
-from application.simulate_data import Game
 from ui.widgets import Widgets
 from ui.widget_utils import Utils
 
@@ -11,3 +11,4 @@ if __name__ == '__main__':
     settings = Settings(configs=configs)
     app_widgets = Widgets(settings=settings)
     utils = Utils(app_widgets=app_widgets, settings=settings)
+    display(utils.app_widgets.ui_app)
