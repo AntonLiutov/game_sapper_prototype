@@ -1,0 +1,90 @@
+{
+  "ALIGNMENT": "center",
+  "LAYOUT_MARGIN": "10px",
+  "CONTINUOUS_UPDATE": false,
+  "DESCRIPTION_WIDTH": "initial",
+  "WIDTH": "100%",
+  "HEIGHT": "50px",
+  "CELL": {
+    "WIDTH_CELL": "auto",
+    "HEIGHT_CELL": "auto",
+    "BLACK_NAME": "B"
+  },
+  "BORDER": {
+    "APP": "10px double black",
+    "BUTTON": "2px solid black",
+    "CELL": "1px solid grey"
+  },
+  "HANDLE_COLOR": {
+    "PRIMARY_COLOR": "royalblue",
+    "START_BUTTON": "lightskyblue",
+    "WON": "dodgerblue",
+    "WARNING": "orange",
+    "LOST": "red"
+  },
+  "DIFFICULTY_DICT": {
+    "Easy": [
+      8,
+      10,
+      55
+    ],
+    "Medium": [
+      16,
+      40,
+      247
+    ],
+    "Hard": [
+      24,
+      99,
+      567
+    ],
+    "Custom": [
+      -1,
+      -1,
+      -1
+    ]
+  },
+  "DROPDOWN_SETTINGS": {
+    "OPTIONS": [
+      "Easy",
+      "Medium",
+      "Hard",
+      "Custom"
+    ],
+    "INDEX": 0
+  },
+  "MATRIX_SIZE": {
+    "VALUE": 8,
+    "MIN": 3,
+    "MAX": 40,
+    "STEP": 1,
+    "DESCRIPTION": "Matrix Size:"
+  },
+  "BLACK_HOLES": {
+    "VALUE": 10,
+    "MIN": 1,
+    "MAX": 55,
+    "STEP": 1,
+    "DESCRIPTION": "# of black holes:"
+  },
+  "VALIDATION": {
+    "VALUE": true,
+    "DESCRIPTION": "Main Menu",
+    "DESCRIPTION_LOAD": "Loading",
+    "DESCRIPTION_START": "Started"
+  },
+  "PROGRESS_BAR": {
+    "VALUE": 0,
+    "MIN": 0,
+    "MAX": 54,
+    "STEP": 1,
+    "DESCRIPTION": "Progress",
+    "DESCRIPTION_TOOLTIP": "0% done"
+  },
+  "START_BUTTON": {
+    "DESCRIPTION": "Start Game",
+    "DESCRIPTION_RESTART": "Restart Game",
+    "DESCRIPTION_LOST": "You Lost. Try Again",
+    "DESCRIPTION_WON": "You Won. Play Again"
+  }
+}
