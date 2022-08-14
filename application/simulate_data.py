@@ -202,23 +202,35 @@ class Game:
         return grid_buttons
 
     def get_all_cells_to_open(self, number):
+        """
+            This function finds all adjacent cells to open while clicking a specific cell
+        :param number: a cell clicked
+        :return:
+        """
+        # defining a set of all buttons to be open and buttons with zero adjacent black hole cells
         all_cells_to_open = set()
         adjacent_open_cells = {number}
 
+        # while there is any cells with zero adjacent black hole -> find adjacent cells
         while len(adjacent_open_cells) != 0:
-            # only zero adjacent
+            # only cells with zero adjacent black hole cells
             open_adj_cells_mask = (self.rows.primary_key.isin(adjacent_open_cells)) & (
                 ~self.rows.adjacent.isin(adjacent_open_cells)) & (self.rows.adjacent_black_hole == 0)
             open_tmp_all_adj_cells_mask = (self.rows.primary_key.isin(adjacent_open_cells))
 
+            # extracting new cells with zero adjacent black hole cells
             adjacent_open_cells = set(self.rows.loc[open_adj_cells_mask].adjacent.values.tolist())
             adjacent_open_cells = adjacent_open_cells.difference(all_cells_to_open)
 
-            # all adjacent to zero
+            # all adjacent cells to cells with zero adjacent black hole cells
             all_adjacent_open_cells = self.rows.loc[open_tmp_all_adj_cells_mask].adjacent.values.tolist()
             all_cells_to_open.update(all_adjacent_open_cells)
 
         return all_cells_to_open
 
     def calculate_open_cells(self):
+        """
+            This function calculates # of open cells
+        :return:
+        """
         self.n_open_cells = self.rows.loc[self.base_mask, "cell_open"].sum()
